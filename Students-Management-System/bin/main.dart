@@ -1,4 +1,4 @@
-import './student.dart';
+import '../lib/student.dart';
 import 'dart:io';
 
 void main() {
