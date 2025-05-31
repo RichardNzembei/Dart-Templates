@@ -1,3 +1,7 @@
+import '../lib/smartDevices.dart';
+
 void main() {
-  print('hello world');
+  SmartLight light = SmartLight();
+  SmartSpeaker speaker = SmartSpeaker();
+  SmartFan fan = SmartFan();
 }
