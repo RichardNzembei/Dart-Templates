@@ -124,11 +124,7 @@ This will append to `device_status.txt`.
 
 ---
 
-## 👨‍💻 Author
 
-Built with ❤️ in Dart by [Your Name]
-
----
 
 ## 📜 License
 
