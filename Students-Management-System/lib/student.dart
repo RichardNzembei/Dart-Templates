@@ -12,41 +12,6 @@ class Student {
 
 List<Student> students = [];
 
-void main() {
-  bool running = true;
-  while (running) {
-    print('\n🎓 Student Management System');
-    print('1. Add Student');
-    print('2. View Students');
-    print('3. Settings');
-    print('4. Exit');
-
-    stdout.write('Enter your choice: ');
-    String? choice = stdin.readLineSync();
-
-    switch (choice) {
-      case '1':
-        addStudent();
-        break;
-      case '2':
-        viewStudents();
-        break;
-      /**
-      case '3':
-        showSettings();
-        break;
-      */
-
-      case '4':
-        print('👋 Exiting...');
-        running = false;
-        break;
-      default:
-        print('❌ Invalid choice');
-    }
-  }
-}
-
 void addStudent() {
   stdout.write('Enter Student name: ');
   String? name = stdin.readLineSync();
@@ -70,5 +35,38 @@ void viewStudents() {
     for (var i = 0; i < students.length; i++) {
       print('${i + 1}, ${students[i]}');
     }
+  }
+}
+
+void showSettings() {
+  bool inSettings = true;
+
+  while (inSettings) {
+    print('\n⚙️ Settings');
+    print('1. Show student count');
+    print('2. Clear all students');
+    print('3. Back to main menu');
+
+    stdout.write('Enter your setting choice');
+    String? subchoice = stdin.readLineSync();
+
+    switch (subchoice) {
+      case '1':
+        print('👥 Total students: ${students.length}');
+        break;
+
+      case '2':
+        students.clear();
+        print('🧹 All students cleared.');
+        break;
+
+      case '3':
+        inSettings = false;
+        break;
+
+      default:
+        print('❌ Invalid settings choice');
+    }
+    ;
   }
 }

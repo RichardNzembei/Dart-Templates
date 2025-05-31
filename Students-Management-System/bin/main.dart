@@ -20,11 +20,10 @@ void main() {
       case '2':
         viewStudents();
         break;
-      /**
+
       case '3':
         showSettings();
         break;
-      */
 
       case '4':
         print('👋 Exiting...');
