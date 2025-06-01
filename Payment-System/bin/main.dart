@@ -1,8 +1,11 @@
 import '../lib/paymentSystem.dart';
 
 void main() {
-  PaymentProcessor mpesa = Mpesa();
-  PaymentProcessor paypal = PayPal();
-  mpesa.processPayment(60000);
-  paypal.processPayment(450);
+  List<PaymentProcessor> processors = [Mpesa(), PayPal(), Stripe()];
+
+  List<double> payments = [2000, 37.5, 109.00];
+
+  for (int i = 0; i < processors.length; i++) {
+    processors[i].processPayment(payments[i]);
+  }
 }
