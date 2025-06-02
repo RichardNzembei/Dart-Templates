@@ -1,9 +1,12 @@
-enum OrderStatus { placed, prepaing, dispatched, delivered, cancelled }
+import 'dart:convert';
+import 'dart:io';
+
+enum OrderStatus { placed, preparing, dispatched, delivered, cancelled }
 
 class Order {
-  final String customerName;
-  final String item;
-  final int quantity;
+  String customerName;
+  String item;
+  int quantity;
   OrderStatus status;
 
   Order({
@@ -13,17 +16,26 @@ class Order {
     required this.status,
   });
 
-  void updateStatus(OrderStatus newStatus) {
-    status = newStatus;
-    print('Order status updated to: $status');
-  }
+  Map<String, dynamic> toJson() => {
+    'customerName': customerName,
+    'item': item,
+    'quantity': quantity,
+    'status': status.name,
+  };
+
+  static Order fromJson(Map<String, dynamic> json) => Order(
+    customerName: json['customerName'],
+    item: json['item'],
+    quantity: json['quantity'],
+    status: OrderStatus.values.firstWhere((s) => s.name == json['status']),
+  );
 
   void trackOrder() {
     switch (status) {
       case OrderStatus.placed:
         print('Order placed by $customerName for $quantity $item(s).');
         break;
-      case OrderStatus.prepaing:
+      case OrderStatus.preparing:
         print('Order is being prepared.');
         break;
       case OrderStatus.dispatched:
@@ -37,4 +49,21 @@ class Order {
         break;
     }
   }
+
+  void updateStatus(OrderStatus newStatus) {
+    status = newStatus;
+  }
+}
+
+List<Order> loadOrders(String filePath) {
+  if (!File(filePath).existsSync()) return [];
+  final file = File(filePath);
+  final content = file.readAsStringSync();
+  final List<dynamic> data = jsonDecode(content);
+  return data.map((json) => Order.fromJson(json)).toList();
+}
+
+void saveOrders(String filePath, List<Order> orders) {
+  final file = File(filePath);
+  file.writeAsStringSync(jsonEncode(orders.map((o) => o.toJson()).toList()));
 }
